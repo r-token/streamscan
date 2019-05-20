@@ -124,14 +124,12 @@ class HomeCollectionViewController: UICollectionViewController {
         
     }
     
-    // MARK: - UICollectionViewDataSource protocol
+    // MARK: - UICollectionViewDataSource
     
-    // tell the collection view how many cells to make
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.items.count
     }
     
-    // make a cell for each cell index path
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         // get a reference to our storyboard cell
@@ -151,6 +149,21 @@ class HomeCollectionViewController: UICollectionViewController {
         return cell
     }
     
+    // Change background color when user touches cell
+    override func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.backgroundColor = UIColor.lightGray
+    }
+    
+    // Change background color back when user releases touch
+    override func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.backgroundColor = UIColor.white
+    }
+    
+    // MARK: - Prepare for segue and perform segue
+    
+    // Prepare for segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "ShowDTVNowPlus", let controller = segue.destination as? ChannelTableViewController {
@@ -224,6 +237,7 @@ class HomeCollectionViewController: UICollectionViewController {
         }
     }
     
+    //perform segue
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item == 0 {
             self.performSegue(withIdentifier: "ShowDTVNowPlus", sender: self)
@@ -248,18 +262,6 @@ class HomeCollectionViewController: UICollectionViewController {
         } else {
             print("Somehow we tapped nothing?")
         }
-    }
-    
-    // change background color when user touches cell
-    override func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.backgroundColor = UIColor.lightGray
-    }
-    
-    // change background color back when user releases touch
-    override func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.backgroundColor = UIColor.white
     }
     
 }

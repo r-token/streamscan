@@ -25,6 +25,8 @@ class ChannelTableViewController: UITableViewController {
         self.tableView.sectionHeaderHeight = 118
     }
     
+    // MARK: - Table view data source
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -47,6 +49,7 @@ class ChannelTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    // My custom stack view - make a custom class out of this eventually and just inherit from that
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 18))

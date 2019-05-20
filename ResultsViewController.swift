@@ -179,18 +179,16 @@ class ResultsViewController: UIViewController, UICollectionViewDataSource, UICol
         }
     }
     
-    // tell the collection view how many cells to make
+    // MARK: - UICollectionViewDataSource
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return winners.count
     }
     
-    // make a cell for each cell index path
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        // get a reference to our storyboard cell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! CollectionViewCell
         
-        // Use the outlet in our custom class to get a reference to the UILabel in the cell
+        // Use the outlets in my custom CollectionViewCell class
         if winners.count > 0 {
             cell.resultCellImage.image = UIImage(named: winners[indexPath.item])
             cell.resultCellImage.layer.borderColor = UIColor.lightGray.cgColor
@@ -205,6 +203,20 @@ class ResultsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         return cell
     }
+    
+    // change background color when user touches cell
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.backgroundColor = UIColor.lightGray
+    }
+    
+    // change background color back when user releases touch
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.backgroundColor = UIColor.white
+    }
+    
+    // MARK: - Prepare for segue and perform segue
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
@@ -303,18 +315,6 @@ class ResultsViewController: UIViewController, UICollectionViewDataSource, UICol
         } else {
             print("Somehow we tapped nothing?")
         }
-    }
-    
-    // change background color when user touches cell
-    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.backgroundColor = UIColor.lightGray
-    }
-    
-    // change background color back when user releases touch
-    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.backgroundColor = UIColor.white
     }
 
 }
