@@ -12,25 +12,36 @@ class HomeCollectionViewController: UICollectionViewController {
     
     let reuseIdentifier = "cell" // also enter this string as the cell identifier in the storyboard
     
-    var items = [UIImage(named: "Hulu"), UIImage(named: "Vue"), UIImage(named: "YouTubeTV"), UIImage(named: "SlingBlue"), UIImage(named: "SlingOrange")]
-    var subtitles: [String] = ["Hulu + Live TV", "Vue Access", "YouTube TV", "Sling Blue", "Sling Orange"]
+    var items = [UIImage(named: "DirecTVNowPlus"), UIImage(named: "DirecTVNowMax"), UIImage(named: "Fubo"), UIImage(named: "Hulu"), UIImage(named: "Philo"), UIImage(named: "SlingBlue"), UIImage(named: "SlingOrange"), UIImage(named: "VueAccess"), UIImage(named: "VueCore"), UIImage(named: "YouTubeTV")]
+    var subtitles: [String] = ["Now Plus", "Now Max", "Fubo TV", "Hulu + Live TV", "Philo", "Sling Blue", "Sling Orange", "Vue Access", "Vue Core", "YouTube TV"]
     
     private let api = API() // Instantiate my API class
     
+    private let dtvNowPlus = "dtvnow-plus" // DirecTV Now - Plus Package
+    private let dtvNowMax = "dtvnow-max" // DirecTV Now - Max Package
+    private let fubo = "fubo" // Fubo TV
     private let hulu = "hulu" // Hulu with Live TV
-    private let vue = "vue" // PlayStation Vue Access
+    private let philo = "philo" // Philo
+    private let slingBlue = "sling-blue" // Sling TV - Blue Package
+    private let slingOrange = "sling-orange" // Sling TV - Orange Package
+    private let vueAccess = "vue-access" // PlayStation Vue - Access Package
+    private let vueCore = "vue-core" //PlayStation Vue - Core Package
     private let yttv = "yttv" // YouTube TV
-    private let slingBlue = "sling-blue" // Sling Blue Package
-    private let slingOrange = "sling-orange" // Sling Orange Package
+    
+    private var dtvNowPlusPrice: String = ""
+    private var dtvNowPlusChannels: [String] = []
+    
+    private var dtvNowMaxPrice: String = ""
+    private var dtvNowMaxChannels: [String] = []
+    
+    private var fuboPrice: String = ""
+    private var fuboChannels: [String] = []
     
     private var huluPrice: String = ""
     private var huluChannels: [String] = []
     
-    private var vuePrice: String = ""
-    private var vueChannels: [String] = []
-    
-    private var yttvPrice: String = ""
-    private var yttvChannels: [String] = []
+    private var philoPrice: String = ""
+    private var philoChannels: [String] = []
     
     private var slingBluePrice: String = ""
     private var slingBlueChannels: [String] = []
@@ -38,9 +49,36 @@ class HomeCollectionViewController: UICollectionViewController {
     private var slingOrangePrice: String = ""
     private var slingOrangeChannels: [String] = []
     
+    private var vueAccessPrice: String = ""
+    private var vueAccessChannels: [String] = []
+    
+    private var vueCorePrice: String = ""
+    private var vueCoreChannels: [String] = []
+    
+    private var yttvPrice: String = ""
+    private var yttvChannels: [String] = []
+    
     // Get all channels from my API endpoints and save them to huluChannels/vueChannels/yttvChannels
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        api.getChannels(from: dtvNowPlus, priceCompletionHandler: { [weak self] price in
+            self?.dtvNowPlusPrice = price ?? "Could not retrieve price for Hulu"
+            }, channelCompletionHandler: { [weak self] channels in
+                self?.dtvNowPlusChannels = channels ?? ["Could not retrieve channels for Hulu"]
+        })
+        
+        api.getChannels(from: dtvNowMax, priceCompletionHandler: { [weak self] price in
+            self?.dtvNowMaxPrice = price ?? "Could not retrieve price for Hulu"
+            }, channelCompletionHandler: { [weak self] channels in
+                self?.dtvNowMaxChannels = channels ?? ["Could not retrieve channels for Hulu"]
+        })
+        
+        api.getChannels(from: fubo, priceCompletionHandler: { [weak self] price in
+            self?.fuboPrice = price ?? "Could not retrieve price for Hulu"
+            }, channelCompletionHandler: { [weak self] channels in
+                self?.fuboChannels = channels ?? ["Could not retrieve channels for Hulu"]
+        })
         
         api.getChannels(from: hulu, priceCompletionHandler: { [weak self] price in
             self?.huluPrice = price ?? "Could not retrieve price for Hulu"
@@ -48,16 +86,10 @@ class HomeCollectionViewController: UICollectionViewController {
                 self?.huluChannels = channels ?? ["Could not retrieve channels for Hulu"]
         })
         
-        api.getChannels(from: vue, priceCompletionHandler: { [weak self] price in
-            self?.vuePrice = price ?? "Could not retrieve price for Vue"
+        api.getChannels(from: philo, priceCompletionHandler: { [weak self] price in
+            self?.philoPrice = price ?? "Could not retrieve price for Hulu"
             }, channelCompletionHandler: { [weak self] channels in
-                self?.vueChannels = channels ?? ["Could not retrieve channels for Vue"]
-        })
-        
-        api.getChannels(from: yttv, priceCompletionHandler: { [weak self] price in
-            self?.yttvPrice = price ?? "Could not retrieve price for YouTube TV"
-            }, channelCompletionHandler: { [weak self] channels in
-                self?.yttvChannels = channels ?? ["Could not retrieve channels for YouTube TV"]
+                self?.philoChannels = channels ?? ["Could not retrieve channels for Hulu"]
         })
         
         api.getChannels(from: slingBlue, priceCompletionHandler: { [weak self] price in
@@ -70,6 +102,24 @@ class HomeCollectionViewController: UICollectionViewController {
             self?.slingOrangePrice = price ?? "Could not retrieve price for Sling Orange"
             }, channelCompletionHandler: { [weak self] channels in
                 self?.slingOrangeChannels = channels ?? ["Could not retrieve channels for Orange"]
+        })
+        
+        api.getChannels(from: vueAccess, priceCompletionHandler: { [weak self] price in
+            self?.vueAccessPrice = price ?? "Could not retrieve price for Hulu"
+            }, channelCompletionHandler: { [weak self] channels in
+                self?.vueAccessChannels = channels ?? ["Could not retrieve channels for Hulu"]
+        })
+        
+        api.getChannels(from: vueCore, priceCompletionHandler: { [weak self] price in
+            self?.vueCorePrice = price ?? "Could not retrieve price for Vue"
+            }, channelCompletionHandler: { [weak self] channels in
+                self?.vueCoreChannels = channels ?? ["Could not retrieve channels for Vue"]
+        })
+        
+        api.getChannels(from: yttv, priceCompletionHandler: { [weak self] price in
+            self?.yttvPrice = price ?? "Could not retrieve price for YouTube TV"
+            }, channelCompletionHandler: { [weak self] channels in
+                self?.yttvChannels = channels ?? ["Could not retrieve channels for YouTube TV"]
         })
         
     }
@@ -103,6 +153,27 @@ class HomeCollectionViewController: UICollectionViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+        if segue.identifier == "ShowDTVNowPlus", let controller = segue.destination as? ChannelTableViewController {
+            controller.titleLabel = "DirecTV Now Plus"
+            controller.priceLabel = dtvNowPlusPrice
+            controller.channels = dtvNowPlusChannels
+            controller.color = UIColor.Colors.Blue.CuriousBlue
+        }
+        
+        if segue.identifier == "ShowDTVNowMax", let controller = segue.destination as? ChannelTableViewController {
+            controller.titleLabel = "DirecTV Now Max"
+            controller.priceLabel = dtvNowMaxPrice
+            controller.channels = dtvNowMaxChannels
+            controller.color = UIColor.Colors.Blue.CuriousBlue
+        }
+        
+        if segue.identifier == "ShowFubo", let controller = segue.destination as? ChannelTableViewController {
+            controller.titleLabel = "Fubo TV"
+            controller.priceLabel = fuboPrice
+            controller.channels = fuboChannels
+            controller.color = UIColor.Colors.Orange.Fubo
+        }
+        
         if segue.identifier == "ShowHulu", let controller = segue.destination as? ChannelTableViewController {
             controller.titleLabel = "Hulu + Live TV"
             controller.priceLabel = huluPrice
@@ -110,18 +181,11 @@ class HomeCollectionViewController: UICollectionViewController {
             controller.color = UIColor.Colors.Green.MountainMeadow
         }
         
-        if segue.identifier == "ShowVue", let controller = segue.destination as? ChannelTableViewController {
-            controller.titleLabel = "Vue Access"
-            controller.priceLabel = vuePrice
-            controller.channels = vueChannels
-            controller.color = UIColor.Colors.Blue.PlayStation
-        }
-        
-        if segue.identifier == "ShowYTTV", let controller = segue.destination as? ChannelTableViewController {
-            controller.titleLabel = "YouTube TV"
-            controller.priceLabel = yttvPrice
-            controller.channels = yttvChannels
-            controller.color = UIColor.Colors.Red.YouTubeTV
+        if segue.identifier == "ShowPhilo", let controller = segue.destination as? ChannelTableViewController {
+            controller.titleLabel = "Philo"
+            controller.priceLabel = philoPrice
+            controller.channels = philoChannels
+            controller.color = UIColor.Colors.Blue.Philo
         }
         
         if segue.identifier == "ShowSlingBlue", let controller = segue.destination as? ChannelTableViewController {
@@ -137,21 +201,52 @@ class HomeCollectionViewController: UICollectionViewController {
             controller.channels = slingOrangeChannels
             controller.color = UIColor.Colors.Orange.Sun
         }
+        
+        if segue.identifier == "ShowVueAccess", let controller = segue.destination as? ChannelTableViewController {
+            controller.titleLabel = "Vue Access"
+            controller.priceLabel = vueAccessPrice
+            controller.channels = vueAccessChannels
+            controller.color = UIColor.Colors.Blue.PlayStation
+        }
+        
+        if segue.identifier == "ShowVueCore", let controller = segue.destination as? ChannelTableViewController {
+            controller.titleLabel = "Vue Core"
+            controller.priceLabel = vueCorePrice
+            controller.channels = vueCoreChannels
+            controller.color = UIColor.Colors.Blue.PlayStation
+        }
+        
+        if segue.identifier == "ShowYTTV", let controller = segue.destination as? ChannelTableViewController {
+            controller.titleLabel = "YouTube TV"
+            controller.priceLabel = yttvPrice
+            controller.channels = yttvChannels
+            controller.color = UIColor.Colors.Red.YouTubeTV
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // handle tap events
-        print("You selected cell #\(indexPath.item)!")
         if indexPath.item == 0 {
-            self.performSegue(withIdentifier: "ShowHulu", sender: self)
+            self.performSegue(withIdentifier: "ShowDTVNowPlus", sender: self)
         } else if indexPath.item == 1 {
-            self.performSegue(withIdentifier: "ShowVue", sender: self)
+            self.performSegue(withIdentifier: "ShowDTVNowMax", sender: self)
         } else if indexPath.item == 2 {
-            self.performSegue(withIdentifier: "ShowYTTV", sender: self)
+            self.performSegue(withIdentifier: "ShowFubo", sender: self)
         } else if indexPath.item == 3 {
-            self.performSegue(withIdentifier: "ShowSlingBlue", sender: self)
+            self.performSegue(withIdentifier: "ShowHulu", sender: self)
         } else if indexPath.item == 4 {
+            self.performSegue(withIdentifier: "ShowPhilo", sender: self)
+        } else if indexPath.item == 5 {
+            self.performSegue(withIdentifier: "ShowSlingBlue", sender: self)
+        } else if indexPath.item == 6 {
             self.performSegue(withIdentifier: "ShowSlingOrange", sender: self)
+        } else if indexPath.item == 7 {
+            self.performSegue(withIdentifier: "ShowVueAccess", sender: self)
+        } else if indexPath.item == 8 {
+            self.performSegue(withIdentifier: "ShowVueCore", sender: self)
+        } else if indexPath.item == 9 {
+            self.performSegue(withIdentifier: "ShowYTTV", sender: self)
+        } else {
+            print("Somehow we tapped nothing?")
         }
     }
     

@@ -20,6 +20,7 @@ extension UIColor {
         
         struct Blue {
             static let PlayStation = UIColor(netHex: 0x003087)
+            static let Philo = UIColor(netHex: 0x005ABF)
             static let PictonBlue = UIColor(netHex: 0x5CADCF)
             static let Mariner = UIColor(netHex: 0x3585C5)
             static let CuriousBlue = UIColor(netHex: 0x4590B6)
@@ -39,6 +40,7 @@ extension UIColor {
         }
         
         struct Orange {
+            static let Fubo = UIColor(netHex: 0xFF4d00)
             static let NeonCarrot = UIColor(netHex: 0xF79E3D)
             static let Sun = UIColor(netHex: 0xEE7841)
         }

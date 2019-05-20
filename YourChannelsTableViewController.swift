@@ -13,39 +13,80 @@ class YourChannelsTableViewController: UITableViewController {
     
     private let api = API() // Instantiate my API class
     
+    private let dtvNowPlus = "dtvnow-plus" // DirecTV Now - Plus Package
+    private let dtvNowMax = "dtvnow-max" // DirecTV Now - Max Package
+    private let fubo = "fubo" // Fubo TV
     private let hulu = "hulu" // Hulu with Live TV
-    private let vue = "vue" // PlayStation Vue
+    private let philo = "philo" // Philo
+    private let slingBlue = "sling-blue" // Sling TV - Blue Package
+    private let slingOrange = "sling-orange" // Sling TV - Orange Package
+    private let vueAccess = "vue-access" // PlayStation Vue - Access Package
+    private let vueCore = "vue-core" //PlayStation Vue - Core Package
     private let yttv = "yttv" // YouTube TV
-    private let slingBlue = "sling-blue" // Sling Blue resource for API call
-    private let slingOrange = "sling-orange" // Sling Orange resource for API call
+    
+    private var dtvNowPlusPrice: String = ""
+    private var dtvNowPlusChannels: [String] = []
+    private var dtvNowPlusCleanChannels: [String] = []
+    
+    private var dtvNowMaxPrice: String = ""
+    private var dtvNowMaxChannels: [String] = []
+    private var dtvNowMaxCleanChannels: [String] = []
+    
+    private var fuboPrice: String = ""
+    private var fuboChannels: [String] = []
+    private var fuboCleanChannels: [String] = []
     
     private var huluPrice: String = ""
     private var huluChannels: [String] = []
+    private var huluCleanChannels: [String] = []
     
-    private var vuePrice: String = ""
-    private var vueChannels: [String] = []
-    
-    private var yttvPrice: String = ""
-    private var yttvChannels: [String] = []
+    private var philoPrice: String = ""
+    private var philoChannels: [String] = []
+    private var philoCleanChannels: [String] = []
     
     private var slingBluePrice: String = ""
     private var slingBlueChannels: [String] = []
+    private var slingBlueCleanChannels: [String] = []
     
     private var slingOrangePrice: String = ""
     private var slingOrangeChannels: [String] = []
+    private var slingOrangeCleanChannels: [String] = []
     
+    private var vueAccessPrice: String = ""
+    private var vueAccessChannels: [String] = []
+    private var vueAccessCleanChannels: [String] = []
+    
+    private var vueCorePrice: String = ""
+    private var vueCoreChannels: [String] = []
+    private var vueCoreCleanChannels: [String] = []
+    
+    private var yttvPrice: String = ""
+    private var yttvChannels: [String] = []
+    private var yttvCleanChannels: [String] = []
+    
+    private var dtvNowPlusScore = 0
+    private var dtvNowMaxScore = 0
+    private var fuboScore = 0
     private var huluScore = 0
-    private var vueScore = 0
-    private var yttvScore = 0
+    private var philoScore = 0
     private var slingBlueScore = 0
     private var slingOrangeScore = 0
+    private var vueAccessScore = 0
+    private var vueCoreScore = 0
+    private var yttvScore = 0
     
+    private var dtvNowPlusResults: [String] = []
+    private var dtvNowMaxResults: [String] = []
+    private var fuboResults: [String] = []
     private var huluResults: [String] = []
-    private var vueResults: [String] = []
-    private var yttvResults: [String] = []
+    private var philoResults: [String] = []
     private var slingBlueResults: [String] = []
     private var slingOrangeResults: [String] = []
+    private var vueAccessResults: [String] = []
+    private var vueCoreResults: [String] = []
+    private var yttvResults: [String] = []
     
+    private var segues: [String] = []
     private var winners: [String] = []
     private var winnerSubtitles: [String] = []
     private var servicesWithAllUserChannels: [String] = []
@@ -60,34 +101,74 @@ class YourChannelsTableViewController: UITableViewController {
         navigationItem.largeTitleDisplayMode = .automatic
         self.tableView.sectionHeaderHeight = 118
         
+        api.getChannels(from: dtvNowPlus, priceCompletionHandler: { [weak self] price in
+            self?.dtvNowPlusPrice = price ?? "Could not retrieve price for Hulu"
+            }, channelCompletionHandler: { [weak self] channels in
+                self?.dtvNowPlusChannels = channels ?? ["Could not retrieve channels for Hulu"]
+                self?.dtvNowPlusCleanChannels = channels ?? ["Could not retrieve channels for Hulu"]
+        })
+        
+        api.getChannels(from: dtvNowMax, priceCompletionHandler: { [weak self] price in
+            self?.dtvNowMaxPrice = price ?? "Could not retrieve price for Hulu"
+            }, channelCompletionHandler: { [weak self] channels in
+                self?.dtvNowMaxChannels = channels ?? ["Could not retrieve channels for Hulu"]
+                self?.dtvNowMaxCleanChannels = channels ?? ["Could not retrieve channels for Hulu"]
+        })
+        
+        api.getChannels(from: fubo, priceCompletionHandler: { [weak self] price in
+            self?.fuboPrice = price ?? "Could not retrieve price for Hulu"
+            }, channelCompletionHandler: { [weak self] channels in
+                self?.fuboChannels = channels ?? ["Could not retrieve channels for Hulu"]
+                self?.fuboCleanChannels = channels ?? ["Could not retrieve channels for Hulu"]
+        })
+        
         api.getChannels(from: hulu, priceCompletionHandler: { [weak self] price in
             self?.huluPrice = price ?? "Could not retrieve price for Hulu"
             }, channelCompletionHandler: { [weak self] channels in
                 self?.huluChannels = channels ?? ["Could not retrieve channels for Hulu"]
+                self?.huluCleanChannels = channels ?? ["Could not retrieve channels for Hulu"]
         })
         
-        api.getChannels(from: vue, priceCompletionHandler: { [weak self] price in
-            self?.vuePrice = price ?? "Could not retrieve price for Vue"
+        api.getChannels(from: philo, priceCompletionHandler: { [weak self] price in
+            self?.philoPrice = price ?? "Could not retrieve price for Hulu"
             }, channelCompletionHandler: { [weak self] channels in
-                self?.vueChannels = channels ?? ["Could not retrieve channels for Vue"]
-        })
-        
-        api.getChannels(from: yttv, priceCompletionHandler: { [weak self] price in
-            self?.yttvPrice = price ?? "Could not retrieve price for YouTube TV"
-            }, channelCompletionHandler: { [weak self] channels in
-                self?.yttvChannels = channels ?? ["Could not retrieve channels for YouTube TV"]
+                self?.philoChannels = channels ?? ["Could not retrieve channels for Hulu"]
+                self?.philoCleanChannels = channels ?? ["Could not retrieve channels for Hulu"]
         })
         
         api.getChannels(from: slingBlue, priceCompletionHandler: { [weak self] price in
             self?.slingBluePrice = price ?? "Could not retrieve price for Sling Blue"
             }, channelCompletionHandler: { [weak self] channels in
                 self?.slingBlueChannels = channels ?? ["Could not retrieve channels for Sling Blue"]
+                self?.slingBlueCleanChannels = channels ?? ["Could not retrieve channels for Hulu"]
         })
         
         api.getChannels(from: slingOrange, priceCompletionHandler: { [weak self] price in
             self?.slingOrangePrice = price ?? "Could not retrieve price for Sling Orange"
             }, channelCompletionHandler: { [weak self] channels in
                 self?.slingOrangeChannels = channels ?? ["Could not retrieve channels for Orange"]
+                self?.slingOrangeCleanChannels = channels ?? ["Could not retrieve channels for Hulu"]
+        })
+        
+        api.getChannels(from: vueAccess, priceCompletionHandler: { [weak self] price in
+            self?.vueAccessPrice = price ?? "Could not retrieve price for Hulu"
+            }, channelCompletionHandler: { [weak self] channels in
+                self?.vueAccessChannels = channels ?? ["Could not retrieve channels for Hulu"]
+                self?.vueAccessCleanChannels = channels ?? ["Could not retrieve channels for Hulu"]
+        })
+        
+        api.getChannels(from: vueCore, priceCompletionHandler: { [weak self] price in
+            self?.vueCorePrice = price ?? "Could not retrieve price for Vue"
+            }, channelCompletionHandler: { [weak self] channels in
+                self?.vueCoreChannels = channels ?? ["Could not retrieve channels for Vue"]
+                self?.vueCoreChannels = channels ?? ["Could not retrieve channels for Hulu"]
+        })
+        
+        api.getChannels(from: yttv, priceCompletionHandler: { [weak self] price in
+            self?.yttvPrice = price ?? "Could not retrieve price for YouTube TV"
+            }, channelCompletionHandler: { [weak self] channels in
+                self?.yttvChannels = channels ?? ["Could not retrieve channels for YouTube TV"]
+                self?.yttvCleanChannels = channels ?? ["Could not retrieve channels for Hulu"]
         })
         
     }
@@ -192,25 +273,42 @@ class YourChannelsTableViewController: UITableViewController {
         // Look at the userChannelsCopy String array and finds the service(s) that have all of the channels the user wants
         // If no service has every channel they list, list the most similar service(s)
         
-        huluChannels = cleanArray(array: huluChannels)
-        vueChannels = cleanArray(array: vueChannels)
-        yttvChannels = cleanArray(array: yttvChannels)
-        slingBlueChannels = cleanArray(array: slingBlueChannels)
-        slingOrangeChannels = cleanArray(array: slingOrangeChannels)
+        dtvNowPlusCleanChannels = cleanArray(array: dtvNowPlusCleanChannels)
+        dtvNowMaxCleanChannels = cleanArray(array: dtvNowMaxCleanChannels)
+        fuboCleanChannels = cleanArray(array: fuboCleanChannels)
+        huluCleanChannels = cleanArray(array: huluCleanChannels)
+        philoCleanChannels = cleanArray(array: philoCleanChannels)
+        slingBlueCleanChannels = cleanArray(array: slingBlueCleanChannels)
+        slingOrangeCleanChannels = cleanArray(array: slingOrangeCleanChannels)
+        vueAccessCleanChannels = cleanArray(array: vueAccessCleanChannels)
+        vueCoreCleanChannels = cleanArray(array: vueCoreCleanChannels)
+        yttvCleanChannels = cleanArray(array: yttvCleanChannels)
         
         let coreChannels = cleanCoreData(data: userChannels)
         
+        dtvNowPlusScore = 0
+        dtvNowMaxScore = 0
+        fuboScore = 0
         huluScore = 0
-        vueScore = 0
-        yttvScore = 0
+        philoScore = 0
         slingBlueScore = 0
         slingOrangeScore = 0
+        vueAccessScore = 0
+        vueCoreScore = 0
+        yttvScore = 0
         
+        segues = []
+        
+        dtvNowPlusResults = []
+        dtvNowMaxResults = []
+        fuboResults = []
         huluResults = []
-        vueResults = []
-        yttvResults = []
+        philoResults = []
         slingBlueResults = []
         slingOrangeResults = []
+        vueAccessResults = []
+        vueCoreResults = []
+        yttvResults = []
         
         winners = []
         winnerSubtitles = []
@@ -221,58 +319,116 @@ class YourChannelsTableViewController: UITableViewController {
         
         // Better way of doing this would probably be to use a set and a hash function
         for userChannel in coreChannels {
-            if huluChannels.contains(userChannel) {
+            if dtvNowPlusCleanChannels.contains(userChannel) {
+                dtvNowPlusScore += 1
+                dtvNowPlusResults.append(userChannel)
+            }
+            if dtvNowMaxCleanChannels.contains(userChannel) {
+                dtvNowMaxScore += 1
+                dtvNowMaxResults.append(userChannel)
+            }
+            if fuboCleanChannels.contains(userChannel) {
+                fuboScore += 1
+                fuboResults.append(userChannel)
+            }
+            if huluCleanChannels.contains(userChannel) {
                 huluScore += 1
                 huluResults.append(userChannel)
             }
-            if vueChannels.contains(userChannel) {
-                vueScore += 1
-                vueResults.append(userChannel)
+            if philoCleanChannels.contains(userChannel) {
+                philoScore += 1
+                philoResults.append(userChannel)
             }
-            if yttvChannels.contains(userChannel) {
-                yttvScore += 1
-                yttvResults.append(userChannel)
-            }
-            if slingBlueChannels.contains(userChannel) {
+            if slingBlueCleanChannels.contains(userChannel) {
                 slingBlueScore += 1
                 slingBlueResults.append(userChannel)
             }
-            if slingOrangeChannels.contains(userChannel) {
+            if slingOrangeCleanChannels.contains(userChannel) {
                 slingOrangeScore += 1
                 slingOrangeResults.append(userChannel)
             }
+            if vueAccessCleanChannels.contains(userChannel) {
+                vueAccessScore += 1
+                vueAccessResults.append(userChannel)
+            }
+            if vueCoreCleanChannels.contains(userChannel) {
+                vueCoreScore += 1
+                vueCoreResults.append(userChannel)
+            }
+            if yttvCleanChannels.contains(userChannel) {
+                yttvScore += 1
+                yttvResults.append(userChannel)
+            }
         }
         
-        let highScore: Int = max(max(max(max(huluScore, vueScore), yttvScore), slingBlueScore), slingOrangeScore)
+        let highScore: Int = max(max(max(max(max(max(max(max(max(dtvNowPlusScore, dtvNowMaxScore), fuboScore), huluScore), philoScore), slingBlueScore), slingOrangeScore), vueAccessScore), vueCoreScore), yttvScore)
         
         /// Append items to the winners array ///
+        if highScore == dtvNowPlusScore && dtvNowPlusScore > 0 {
+            winners.append("DirecTVNowPlus")
+            winnerSubtitles.append("Now Plus")
+            segues.append("ShowDTVNowPlusChannels")
+        }
+        
+        if highScore == dtvNowMaxScore && dtvNowMaxScore > 0 {
+            winners.append("DirecTVNowMax")
+            winnerSubtitles.append("Now Max")
+            segues.append("ShowDTVNowMaxChannels")
+            
+        }
+        if highScore == fuboScore && fuboScore > 0 {
+            winners.append("Fubo")
+            winnerSubtitles.append("Fubo TV")
+            segues.append("ShowFuboChannels")
+            
+        }
+        
         if highScore == huluScore && huluScore > 0 {
             winners.append("Hulu")
             winnerSubtitles.append("Hulu + Live TV")
+            segues.append("ShowHuluChannels")
             
         }
         
-        if highScore == vueScore && vueScore > 0 {
-            winners.append("Vue")
-            winnerSubtitles.append("Vue Access")
-            
-        }
-        
-        if highScore == yttvScore && yttvScore > 0 {
-            winners.append("YouTubeTV")
-            winnerSubtitles.append("YouTube TV")
+        if highScore == philoScore && philoScore > 0 {
+            winners.append("Philo")
+            winnerSubtitles.append("Philo")
+            segues.append("ShowPhiloChannels")
             
         }
         
         if highScore == slingBlueScore && slingBlueScore > 0 {
             winners.append("SlingBlue")
             winnerSubtitles.append("Sling Blue")
+            segues.append("ShowSlingBlueChannels")
             
         }
         
         if highScore == slingOrangeScore && slingOrangeScore > 0 {
             winners.append("SlingOrange")
             winnerSubtitles.append("Sling Orange")
+            segues.append("ShowSlingOrangeChannels")
+            
+        }
+        
+        if highScore == vueAccessScore && vueAccessScore > 0 {
+            winners.append("VueAccess")
+            winnerSubtitles.append("Vue Access")
+            segues.append("ShowVueAccessChannels")
+            
+        }
+        
+        if highScore == vueCoreScore && vueCoreScore > 0 {
+            winners.append("VueCore")
+            winnerSubtitles.append("Vue Core")
+            segues.append("ShowVueCoreChannels")
+            
+        }
+        
+        if highScore == yttvScore && yttvScore > 0 {
+            winners.append("YouTubeTV")
+            winnerSubtitles.append("YouTube TV")
+            segues.append("ShowYTTVChannels")
             
         }
         /// Stop appending items to the winners and winnerSubtitles array ///
@@ -280,18 +436,28 @@ class YourChannelsTableViewController: UITableViewController {
         
         
         /// Append items to the servicesWithAllUserChannels array ///
+        if dtvNowPlusScore == userChannels.count {
+            servicesWithAllUserChannels.append("Now Plus")
+            
+        }
+        
+        if dtvNowMaxScore == userChannels.count {
+            servicesWithAllUserChannels.append("Now Max")
+            
+        }
+        
+        if fuboScore == userChannels.count {
+            servicesWithAllUserChannels.append("Fubo TV")
+            
+        }
+        
         if huluScore == userChannels.count {
             servicesWithAllUserChannels.append("Hulu + Live TV")
             
         }
         
-        if vueScore == userChannels.count {
-            servicesWithAllUserChannels.append("Vue Access")
-            
-        }
-        
-        if yttvScore == userChannels.count {
-            servicesWithAllUserChannels.append("YouTube TV")
+        if philoScore == userChannels.count {
+            servicesWithAllUserChannels.append("Philo")
             
         }
         
@@ -304,11 +470,23 @@ class YourChannelsTableViewController: UITableViewController {
             servicesWithAllUserChannels.append("Sling Orange")
             
         }
+        
+        if vueAccessScore == userChannels.count {
+            servicesWithAllUserChannels.append("Vue Access")
+            
+        }
+        
+        if vueCoreScore == userChannels.count {
+            servicesWithAllUserChannels.append("Vue Core")
+            
+        }
+        
+        if yttvScore == userChannels.count {
+            servicesWithAllUserChannels.append("YouTube TV")
+            
+        }
         /// Stop appending items to the servicesWithAllUserChannelsArray ///
         
-        print(slingOrangeScore)
-        print(slingOrangeResults)
-        print(slingOrangeChannels)
         
         if userChannels.count > 0 {
             self.performSegue(withIdentifier: "ShowResults", sender: self)
@@ -342,14 +520,17 @@ class YourChannelsTableViewController: UITableViewController {
         
     }
     
+    
+    // compare lowercased channels, and filter out all white spaces and punctuation/symbols
     func cleanArray(array: [String]) -> [String] {
         var cleanArray = array
         cleanArray = cleanArray.map({$0.lowercased()})
-        cleanArray = cleanArray.map({$0.filter({ !" \n\t\r !@#$%^&*()-_+={[}]|\'?/>.<,~`".contains($0) }) }) //filter out all white spaces and punctuation/symbols
+        cleanArray = cleanArray.map({$0.filter({ !" \n\t\r !@#$%^&*()-_+={[}]|\'?/>.<,~`".contains($0) }) })
         
         return cleanArray
     }
     
+    // similar function to cleanArray, but for our core data items
     func cleanCoreData(data: [NSManagedObject]) -> [String] {
         let cleanData = data
         var cleanPoint: String
@@ -369,18 +550,50 @@ class YourChannelsTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if let controller = segue.destination as? ResultsViewController {
+            controller.dtvNowPlusPrice = dtvNowPlusPrice
+            controller.dtvNowPlusChannels = dtvNowPlusChannels
+            controller.dtvNowMaxPrice = dtvNowMaxPrice
+            controller.dtvNowMaxChannels = dtvNowMaxChannels
+            controller.fuboPrice = fuboPrice
+            controller.fuboChannels = fuboChannels
+            controller.huluPrice = huluPrice
+            controller.huluChannels = huluChannels
+            controller.philoPrice = philoPrice
+            controller.philoChannels = philoChannels
+            controller.slingBluePrice = slingBluePrice
+            controller.slingBlueChannels = slingBlueChannels
+            controller.slingOrangePrice = slingOrangePrice
+            controller.slingOrangeChannels = slingOrangeChannels
+            controller.vueAccessPrice = vueAccessPrice
+            controller.vueAccessChannels = vueAccessChannels
+            controller.vueCorePrice = vueCorePrice
+            controller.vueCoreChannels = vueCoreChannels
+            controller.yttvPrice = yttvPrice
+            controller.yttvChannels = yttvChannels
+            
+            controller.dtvNowPlusScore = dtvNowPlusScore
+            controller.dtvNowMaxScore = dtvNowMaxScore
+            controller.fuboScore = fuboScore
             controller.huluScore = huluScore
-            controller.vueScore = vueScore
-            controller.yttvScore = yttvScore
+            controller.philoScore = philoScore
             controller.slingBlueScore = slingBlueScore
             controller.slingOrangeScore = slingOrangeScore
+            controller.vueAccessScore = vueAccessScore
+            controller.vueCoreScore = vueCoreScore
+            controller.yttvScore = yttvScore
             
+            controller.dtvNowPlusResults = dtvNowPlusResults
+            controller.dtvNowMaxResults = dtvNowMaxResults
+            controller.fuboResults = fuboResults
             controller.huluResults = huluResults
-            controller.vueResults = vueResults
-            controller.yttvResults = yttvResults
+            controller.philoResults = philoResults
             controller.slingBlueResults = slingBlueResults
             controller.slingOrangeResults = slingOrangeResults
+            controller.vueAccessResults = vueAccessResults
+            controller.vueCoreResults = vueCoreResults
+            controller.yttvResults = yttvResults
             
+            controller.segues = segues
             controller.winners = winners
             controller.winnerSubtitles = winnerSubtitles
             controller.servicesWithAllUserChannels = servicesWithAllUserChannels
@@ -403,7 +616,7 @@ class YourChannelsTableViewController: UITableViewController {
                 do {
                     try managedContext.save()
                 } catch let error as NSError {
-                    print("Error While Deleting Note: \(error.userInfo)")
+                    print("Error While Deleting Channel: \(error.userInfo)")
                 }
                 
             }

@@ -26,12 +26,10 @@ class ChannelTableViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return channels.count
     }
     
@@ -65,7 +63,11 @@ class ChannelTableViewController: UITableViewController {
         self.view.addSubview(price)
         
         let numberOfChannels = UILabel(frame: CGRect(x: 20, y: 20, width: tableView.frame.size.width, height: 50))
-        numberOfChannels.text = "  Number of Channels: \(channels.count)"
+        if channels.count != 1 { // needed to add this because if it can't retrieve the channels from the API it returns an error message. Error message counts as a channel, and it would say there was one channel
+            numberOfChannels.text = "  Number of Channels: \(channels.count)"
+        } else {
+            numberOfChannels.text = " Number of Channels: 0"
+        }
         numberOfChannels.textColor = .white
         numberOfChannels.font = UIFont.boldSystemFont(ofSize: 25.0)
         numberOfChannels.textAlignment = .left
