@@ -161,7 +161,7 @@ class YourChannelsTableViewController: UITableViewController {
             self?.vueCorePrice = price ?? "Could not retrieve price for Vue"
             }, channelCompletionHandler: { [weak self] channels in
                 self?.vueCoreChannels = channels ?? ["Could not retrieve channels for Vue"]
-                self?.vueCoreChannels = channels ?? ["Could not retrieve channels for Hulu"]
+                self?.vueCoreCleanChannels = channels ?? ["Could not retrieve channels for Hulu"]
         })
         
         api.getChannels(from: yttv, priceCompletionHandler: { [weak self] price in
