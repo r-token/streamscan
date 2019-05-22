@@ -260,7 +260,7 @@ class HomeCollectionViewController: UICollectionViewController {
         } else if indexPath.item == 9 {
             self.performSegue(withIdentifier: "ShowYTTV", sender: self)
         } else {
-            print("Somehow we tapped nothing?")
+            print("Somehow we tapped nothing")
         }
     }
     
