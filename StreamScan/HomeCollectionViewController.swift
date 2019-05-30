@@ -63,6 +63,8 @@ class HomeCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.collectionView.backgroundColor = UIColor.black
+        
         api.getChannels(from: dtvNowPlus, priceCompletionHandler: { [weak self] price in
             self?.dtvNowPlusPrice = price ?? "Could not retrieve price for Hulu"
             }, channelCompletionHandler: { [weak self] channels in

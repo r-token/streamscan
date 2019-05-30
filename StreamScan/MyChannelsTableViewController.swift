@@ -559,6 +559,7 @@ class MyChannelsTableViewController: UITableViewController {
         
         cell.textLabel?.text = channel.value(forKeyPath: "name") as? String
         cell.selectionStyle = .none
+        cell.textLabel?.textColor = UIColor.white
         
         return cell
     }

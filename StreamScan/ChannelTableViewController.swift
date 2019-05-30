@@ -20,7 +20,6 @@ class ChannelTableViewController: UITableViewController {
         
         navigationItem.largeTitleDisplayMode = .automatic
         self.title = titleLabel
-        self.navigationController?.navigationBar.tintColor = color
         
         self.tableView.sectionHeaderHeight = 118
     }
@@ -41,6 +40,7 @@ class ChannelTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         cell.textLabel?.text = channels[indexPath.row]
+        cell.textLabel?.textColor = UIColor.white
         
         return cell
     }
