@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class YourChannelsTableViewController: UITableViewController {
+class MyChannelsTableViewController: UITableViewController {
     
     private let api = API() // Instantiate my API class
     
@@ -88,7 +88,8 @@ class YourChannelsTableViewController: UITableViewController {
     
     private var segues: [String] = []
     private var winners: [String] = []
-    private var winnerSubtitles: [String] = []
+    private var winnerServiceNames: [String] = []
+    private var winnerServicePrices: [String] = []
     private var servicesWithAllUserChannels: [String] = []
     
     private var userChannels: [NSManagedObject] = [] // channels the user picked that are saved with Core Data
@@ -271,7 +272,8 @@ class YourChannelsTableViewController: UITableViewController {
         yttvResults = []
         
         winners = []
-        winnerSubtitles = []
+        winnerServiceNames = []
+        winnerServicePrices = []
         servicesWithAllUserChannels = []
         
         //let allChannels: [String] = huluChannels + vueChannels + yttvChannels
@@ -326,72 +328,82 @@ class YourChannelsTableViewController: UITableViewController {
         /// Append items to the winners array ///
         if highScore == dtvNowPlusScore && dtvNowPlusScore > 0 {
             winners.append("DirecTVNowPlus")
-            winnerSubtitles.append("Now Plus")
+            winnerServiceNames.append("Now Plus")
+            winnerServicePrices.append("$50/month")
             segues.append("ShowDTVNowPlusChannels")
         }
         
         if highScore == dtvNowMaxScore && dtvNowMaxScore > 0 {
             winners.append("DirecTVNowMax")
-            winnerSubtitles.append("Now Max")
+            winnerServiceNames.append("Now Max")
+            winnerServicePrices.append("$70/month")
             segues.append("ShowDTVNowMaxChannels")
             
         }
         if highScore == fuboScore && fuboScore > 0 {
             winners.append("Fubo")
-            winnerSubtitles.append("Fubo TV")
+            winnerServiceNames.append("Fubo TV")
+            winnerServicePrices.append("$55/month")
             segues.append("ShowFuboChannels")
             
         }
         
         if highScore == huluScore && huluScore > 0 {
             winners.append("Hulu")
-            winnerSubtitles.append("Hulu + Live TV")
+            winnerServiceNames.append("Hulu + Live TV")
+            winnerServicePrices.append("$45/month")
             segues.append("ShowHuluChannels")
             
         }
         
         if highScore == philoScore && philoScore > 0 {
             winners.append("Philo")
-            winnerSubtitles.append("Philo")
+            winnerServiceNames.append("Philo")
+            winnerServicePrices.append("$20/month")
             segues.append("ShowPhiloChannels")
             
         }
         
         if highScore == slingBlueScore && slingBlueScore > 0 {
             winners.append("SlingBlue")
-            winnerSubtitles.append("Sling Blue")
+            winnerServiceNames.append("Sling Blue")
+            winnerServicePrices.append("$25/month")
             segues.append("ShowSlingBlueChannels")
             
         }
         
         if highScore == slingOrangeScore && slingOrangeScore > 0 {
             winners.append("SlingOrange")
-            winnerSubtitles.append("Sling Orange")
+            winnerServiceNames.append("Sling Orange")
+            winnerServicePrices.append("$25/month")
             segues.append("ShowSlingOrangeChannels")
             
         }
         
         if highScore == vueAccessScore && vueAccessScore > 0 {
             winners.append("VueAccess")
-            winnerSubtitles.append("Vue Access")
+            winnerServiceNames.append("Vue Access")
+            winnerServicePrices.append("$45/month")
             segues.append("ShowVueAccessChannels")
             
         }
         
         if highScore == vueCoreScore && vueCoreScore > 0 {
             winners.append("VueCore")
-            winnerSubtitles.append("Vue Core")
+            winnerServiceNames.append("Vue Core")
+            winnerServicePrices.append("$50/month")
             segues.append("ShowVueCoreChannels")
             
         }
         
         if highScore == yttvScore && yttvScore > 0 {
             winners.append("YouTubeTV")
-            winnerSubtitles.append("YouTube TV")
+            winnerServiceNames.append("YouTube TV")
+            winnerServicePrices.append("$50/month")
             segues.append("ShowYTTVChannels")
             
         }
-        /// Stop appending items to the winners and winnerSubtitles array ///
+        /// Stop appending items to the winners and winnerServiceNames and winnerServicePrices arrays ///
         
         
         
@@ -683,7 +695,8 @@ class YourChannelsTableViewController: UITableViewController {
             
             controller.segues = segues
             controller.winners = winners
-            controller.winnerSubtitles = winnerSubtitles
+            controller.winnerServiceNames = winnerServiceNames
+            controller.winnerServicePrices = winnerServicePrices
             controller.servicesWithAllUserChannels = servicesWithAllUserChannels
         }
     }

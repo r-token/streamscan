@@ -77,7 +77,8 @@ class ResultsViewController: UIViewController, UICollectionViewDataSource, UICol
     
     var segues: [String] = []
     var winners: [String] = []
-    var winnerSubtitles: [String] = []
+    var winnerServiceNames: [String] = []
+    var winnerServicePrices: [String] = []
     var servicesWithAllUserChannels: [String] = []
     
     @IBOutlet var headerLabel: UILabel!
@@ -115,9 +116,9 @@ class ResultsViewController: UIViewController, UICollectionViewDataSource, UICol
             headerLabel.text = "\(servicesWithAllUserChannels.joined(separator: ", ")) have all of the channels you're looking for!"
             
         } else if winners.count == 1 {
-            headerLabel.text = "None of our TV services have every channel you want, but \(winnerSubtitles.joined()) has the most"
+            headerLabel.text = "None of our TV services have every channel you want, but \(winnerServiceNames.joined()) has the most"
             
-            for winner in winnerSubtitles {
+            for winner in winnerServiceNames {
                 if winner == "Now Plus" {
                     resultsLabel1.text = "\(winner) has \(dtvNowPlusScore) of your channels: \(dtvNowPlusResults.joined(separator: ", "))"
                 } else if winner == "Now Max" {
@@ -144,9 +145,9 @@ class ResultsViewController: UIViewController, UICollectionViewDataSource, UICol
             }
             
         } else if winners.count > 1 {
-            headerLabel.text = "None of our TV services have every channel you want, but \(winnerSubtitles.joined(separator: ", ")) have the most."
+            headerLabel.text = "None of our TV services have every channel you want, but \(winnerServiceNames.joined(separator: ", ")) have the most."
             
-            for winner in winnerSubtitles {
+            for winner in winnerServiceNames {
                 
                 if winner == "Now Plus" {
                     resultsLabel1.text = "\(winner) has \(dtvNowPlusScore) of your channels: \(dtvNowPlusResults.joined(separator: ", "))"
@@ -190,13 +191,15 @@ class ResultsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         // Use the outlets in my custom CollectionViewCell class
         if winners.count > 0 {
-            cell.resultCellImage.image = UIImage(named: winners[indexPath.item])
-            cell.resultCellImage.layer.borderColor = UIColor.lightGray.cgColor
-            cell.resultCellImage.layer.borderWidth = 1
+            cell.resultServiceName.text = winnerServiceNames[indexPath.item]
             
-            cell.resultCellSubtitle.text = winnerSubtitles[indexPath.item]
+            cell.resultServiceLogo.image = UIImage(named: winners[indexPath.item])
+            cell.resultServiceLogo.layer.borderColor = UIColor.darkGray.cgColor
+            cell.resultServiceLogo.layer.borderWidth = 1
             
-            cell.layer.borderColor = UIColor.lightGray.cgColor
+            cell.resultServicePrice.text = winnerServicePrices[indexPath.item]
+            
+            cell.layer.borderColor = UIColor.darkGray.cgColor
             cell.layer.borderWidth = 1
             cell.layer.cornerRadius = 8
         }

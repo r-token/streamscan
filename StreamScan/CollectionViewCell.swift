@@ -10,10 +10,14 @@ import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet var cellImage: UIImageView!
-    @IBOutlet var cellSubtitle: UILabel!
     
-    @IBOutlet var resultCellImage: UIImageView!
-    @IBOutlet var resultCellSubtitle: UILabel!
+    @IBOutlet var serviceName: UILabel!
+    @IBOutlet var serviceLogo: UIImageView!
+    @IBOutlet var servicePrice: UILabel!
+    
+    @IBOutlet var resultServiceName: UILabel!
+    @IBOutlet var resultServiceLogo: UIImageView!
+    @IBOutlet var resultServicePrice: UILabel!
+    
     
 }

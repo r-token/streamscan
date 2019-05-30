@@ -12,8 +12,9 @@ class HomeCollectionViewController: UICollectionViewController {
     
     let reuseIdentifier = "cell" // also enter this string as the cell identifier in the storyboard
     
-    var items = [UIImage(named: "DirecTVNowPlus"), UIImage(named: "DirecTVNowMax"), UIImage(named: "Fubo"), UIImage(named: "Hulu"), UIImage(named: "Philo"), UIImage(named: "SlingBlue"), UIImage(named: "SlingOrange"), UIImage(named: "VueAccess"), UIImage(named: "VueCore"), UIImage(named: "YouTubeTV")]
-    var subtitles: [String] = ["Now Plus", "Now Max", "Fubo TV", "Hulu + Live TV", "Philo", "Sling Blue", "Sling Orange", "Vue Access", "Vue Core", "YouTube TV"]
+    let items = [UIImage(named: "DirecTVNowPlus"), UIImage(named: "DirecTVNowMax"), UIImage(named: "Fubo"), UIImage(named: "Hulu"), UIImage(named: "Philo"), UIImage(named: "SlingBlue"), UIImage(named: "SlingOrange"), UIImage(named: "VueAccess"), UIImage(named: "VueCore"), UIImage(named: "YouTubeTV")]
+    let serviceNames: [String] = ["Now Plus", "Now Max", "Fubo TV", "Hulu + Live TV", "Philo", "Sling Blue", "Sling Orange", "Vue Access", "Vue Core", "YouTube TV"]
+    let servicePrices: [String] = ["$50/month", "$70/month", "$55/month", "$45/month", "$20/month", "$25/month", "$25/month", "45/month", "$50/month", "$50/month"]
     
     private let api = API() // Instantiate my API class
     
@@ -136,13 +137,15 @@ class HomeCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! CollectionViewCell
         
         // Use the outlet in our custom class to get a reference to the UILabel in the cell
-        cell.cellImage.image = self.items[indexPath.item]
-        cell.cellImage.layer.borderColor = UIColor.lightGray.cgColor
-        cell.cellImage.layer.borderWidth = 1
+        cell.serviceName.text = self.serviceNames[indexPath.item]
         
-        cell.cellSubtitle.text = self.subtitles[indexPath.item]
+        cell.serviceLogo.image = self.items[indexPath.item]
+        cell.serviceLogo.layer.borderColor = UIColor.darkGray.cgColor
+        cell.serviceLogo.layer.borderWidth = 1
         
-        cell.layer.borderColor = UIColor.lightGray.cgColor
+        cell.servicePrice.text = self.servicePrices[indexPath.item]
+        
+        cell.layer.borderColor = UIColor.darkGray.cgColor
         cell.layer.borderWidth = 1
         cell.layer.cornerRadius = 8
         

@@ -11,7 +11,7 @@
 		F40419212288C8340099AB49 /* UIColor+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40419202288C8340099AB49 /* UIColor+Colors.swift */; };
 		F40419232288D9C00099AB49 /* ChannelTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40419222288D9C00099AB49 /* ChannelTableViewController.swift */; };
 		F40419262288E3FD0099AB49 /* UIStackView+BackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40419252288E3FD0099AB49 /* UIStackView+BackgroundColor.swift */; };
-		F40419282288F07B0099AB49 /* YourChannelsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40419272288F07B0099AB49 /* YourChannelsTableViewController.swift */; };
+		F40419282288F07B0099AB49 /* MyChannelsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40419272288F07B0099AB49 /* MyChannelsTableViewController.swift */; };
 		F42500E42283BC5700F5F837 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42500E32283BC5700F5F837 /* API.swift */; };
 		F4B4296B228D0F1000432DD6 /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B4296A228D0F1000432DD6 /* ResultsViewController.swift */; };
 		F4B4296D228F2AE800432DD6 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B4296C228F2AE800432DD6 /* CollectionViewCell.swift */; };
@@ -32,7 +32,7 @@
 		F40419202288C8340099AB49 /* UIColor+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors.swift"; sourceTree = "<group>"; };
 		F40419222288D9C00099AB49 /* ChannelTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelTableViewController.swift; sourceTree = "<group>"; };
 		F40419252288E3FD0099AB49 /* UIStackView+BackgroundColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+BackgroundColor.swift"; sourceTree = "<group>"; };
-		F40419272288F07B0099AB49 /* YourChannelsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourChannelsTableViewController.swift; sourceTree = "<group>"; };
+		F40419272288F07B0099AB49 /* MyChannelsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChannelsTableViewController.swift; sourceTree = "<group>"; };
 		F42500E32283BC5700F5F837 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		F4B4296A228D0F1000432DD6 /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
 		F4B4296C228F2AE800432DD6 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
@@ -119,7 +119,7 @@
 				F4E361BE2266DC2200B4E8F3 /* Main.storyboard */,
 				F4B4296E228F2B4800432DD6 /* HomeCollectionViewController.swift */,
 				F40419222288D9C00099AB49 /* ChannelTableViewController.swift */,
-				F40419272288F07B0099AB49 /* YourChannelsTableViewController.swift */,
+				F40419272288F07B0099AB49 /* MyChannelsTableViewController.swift */,
 				F4B4296A228D0F1000432DD6 /* ResultsViewController.swift */,
 				F4B4296C228F2AE800432DD6 /* CollectionViewCell.swift */,
 				F4E361BA2266DC2200B4E8F3 /* AppDelegate.swift */,
@@ -235,7 +235,7 @@
 				F4B4296B228D0F1000432DD6 /* ResultsViewController.swift in Sources */,
 				F4E361BB2266DC2200B4E8F3 /* AppDelegate.swift in Sources */,
 				F40419232288D9C00099AB49 /* ChannelTableViewController.swift in Sources */,
-				F40419282288F07B0099AB49 /* YourChannelsTableViewController.swift in Sources */,
+				F40419282288F07B0099AB49 /* MyChannelsTableViewController.swift in Sources */,
 				F4CA17F3228F9E5B0092DAA9 /* UserChannels.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
