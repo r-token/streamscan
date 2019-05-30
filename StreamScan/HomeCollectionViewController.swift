@@ -14,7 +14,7 @@ class HomeCollectionViewController: UICollectionViewController {
     
     let items = [UIImage(named: "DirecTVNowPlus"), UIImage(named: "DirecTVNowMax"), UIImage(named: "Fubo"), UIImage(named: "Hulu"), UIImage(named: "Philo"), UIImage(named: "SlingBlue"), UIImage(named: "SlingOrange"), UIImage(named: "VueAccess"), UIImage(named: "VueCore"), UIImage(named: "YouTubeTV")]
     let serviceNames: [String] = ["Now Plus", "Now Max", "Fubo TV", "Hulu + Live TV", "Philo", "Sling Blue", "Sling Orange", "Vue Access", "Vue Core", "YouTube TV"]
-    let servicePrices: [String] = ["$50/month", "$70/month", "$55/month", "$45/month", "$20/month", "$25/month", "$25/month", "45/month", "$50/month", "$50/month"]
+    let servicePrices: [String] = ["$50/month", "$70/month", "$55/month", "$45/month", "$20/month", "$25/month", "$25/month", "$45/month", "$50/month", "$50/month"]
     
     private let api = API() // Instantiate my API class
     
